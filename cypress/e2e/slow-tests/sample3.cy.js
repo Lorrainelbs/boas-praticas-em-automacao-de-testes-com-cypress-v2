@@ -8,9 +8,8 @@ describe('Unnecessary waiting bad practice', () => {
     cy.get('[data-test-id="search-button"]')
       .click()
       .blur()
-    cy.wait(10000)
 
-    cy.contains('h2', 'Ramen (sopa)')
+    cy.contains('h2', 'Ramen (sopa)', {timeout: 10000}) //desse modo o teste espera pelo tempo máximo e nao pelo tempo minimo
       .should('be.visible')
   })
 })

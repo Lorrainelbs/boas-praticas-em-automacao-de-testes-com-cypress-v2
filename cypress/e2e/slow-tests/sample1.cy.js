@@ -1,8 +1,11 @@
+const {hits} = require('../../fixtures/stories')
+
 describe('Slow tests bad practice - use the API to test the frontend', () => {
   beforeEach(() => {
     cy.intercept(
       'GET',
-      '**/search**'
+      '**/search**',
+      {fixture: 'stories'} //desse modo nao testamos na API real, mas sim no frontend, o que torna o teste muito mais rapido
     ).as('getStories')
 
     cy.visit('https://hackernews-seven.vercel.app')
@@ -22,6 +25,6 @@ describe('Slow tests bad practice - use the API to test the frontend', () => {
     cy.wait('@getStories')
 
     cy.get('.table-row')
-      .should('have.length', 100)
+      .should('have.length', hits.length)
   })
 })
